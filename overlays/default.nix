@@ -33,7 +33,7 @@ in {
         # Home-manager wrapper
         home-manager-wrapper = writeShellScriptBin "hm" ''
           if ${hmrice}/bin/hmrice status | grep -q "RICING"; then
-             echo "Unrise first (hmrice unrice), then run again"
+             echo "Unrice first (hmrice unrice), then run again"
           else
             ${home-manager}/bin/home-manager --flake git+file://''${NIXCONFIG:-~/.config/home-manager} $@
           fi
