@@ -42,45 +42,60 @@
       };
     };
 
-    caelestia.shell.settings = {
-      paths = {
-        wallpaperDir = "~/Imagens/Wallpapers";
-        mediaGif = ../../assets/gif/dancing.gif;
-        sessionGif = ../../assets/gif/mihawk.gif;
-      };
-    };
-    caelestia.cli = {
-      package = pkgs.caelestia-cli;
-
-      settings = {
-        music = {
-          spotify.enable = false;
-          feishin.enable = false;
+    caelestia = {
+      shell = {
+        package = pkgs.caelestia-shell;
+        settings = {
+          paths = {
+            wallpaperDir = "~/Imagens/Wallpapers";
+            mediaGif = ../../assets/gif/dancing.gif;
+            sessionGif = ../../assets/gif/mihawk.gif;
+          };
+          idle = {
+            timeouts = _:
+              [
+                {
+                  timeout = 240;
+                  idleAction = "lock";
+                }
+              ]
+              ++ lib.drop 1 _;
+          };
         };
-        toggles = {
-          todo = {
-            "todoist.desktop".enable = false; # Disable todoist
-            obisidian = {
-              enable = true;
-              match = [{class = "obsidian";}];
-              command = ["obsidian"];
-              move = false;
-            };
-          };
-          communication = {
-            telegram = {
-              enable = true;
-              match = [{class = "io.github.kotatogram";}];
-              command = ["kotatogram-desktop"];
-            };
-            whatsapp = {
-              command = ["zapzap"];
-              match = _: [{class = "ZapZap";}];
-            };
+      };
+      cli = {
+        package = pkgs.caelestia-cli;
 
-            discord.enable = false;
+        settings = {
+          music = {
+            spotify.enable = false;
+            feishin.enable = false;
           };
-          sysmon.btop.command = _: lib.take 5 _ ++ ["${pkgs.btop}/bin/btop"]; # run btop directly instead of starting shell
+          toggles = {
+            todo = {
+              "todoist.desktop".enable = false; # Disable todoist
+              obisidian = {
+                enable = true;
+                match = [{class = "obsidian";}];
+                command = ["obsidian"];
+                move = false;
+              };
+            };
+            communication = {
+              telegram = {
+                enable = true;
+                match = [{class = "io.github.kotatogram";}];
+                command = ["kotatogram-desktop"];
+              };
+              whatsapp = {
+                command = ["zapzap"];
+                match = _: [{class = "ZapZap";}];
+              };
+
+              discord.enable = false;
+            };
+            sysmon.btop.command = _: lib.take 5 _ ++ ["${pkgs.btop}/bin/btop"]; # run btop directly instead of starting shell
+          };
         };
       };
     };

@@ -13,6 +13,10 @@
     ./kblayout.nix
   ];
 
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
+
   home.username = "markus";
   home.homeDirectory = "/home/markus";
   home.stateVersion = "25.11";

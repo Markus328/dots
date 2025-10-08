@@ -67,16 +67,17 @@
         ]
       },
       "locked": {
-        "dirtyRev": "df1b02c4ed8270d8d873f14b6512378ec8023a6c-dirty",
-        "dirtyShortRev": "df1b02c-dirty",
-        "lastModified": 1759765066,
-        "narHash": "sha256-YiWaKYucAk4YwCQi1WuGe8XBj3eJOHIsDpiXNSL1otU=",
-        "type": "git",
-        "url": "file:///userdata/@workspace/caelestia-nix/caelestia.nix"
+        "lastModified": 1759945465,
+        "narHash": "sha256-0JYEdKqgGbyla7xFeNMIBmkQFj04uLeRF+5eH/LOMP0=",
+        "owner": "Markus328",
+        "repo": "caelestia-nix",
+        "rev": "8a3168417fcc0fb6f7f2a1a37eec57808b41d964",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///userdata/@workspace/caelestia-nix/caelestia.nix"
+        "owner": "Markus328",
+        "repo": "caelestia-nix",
+        "type": "github"
       }
     },
     "caelestia-shell": {
