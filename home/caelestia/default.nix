@@ -22,9 +22,12 @@
 
         blurEnabled = false;
         shadowEnabled = false;
+        windowOpacity = 0.999;
 
         windowGapsOut = 20;
         singleWindowGapsOut = 15;
+
+        cursorTheme = "Bibata-Modern-Ice";
       };
       hyprland = {
         gestures.enable = false;
@@ -33,10 +36,10 @@
           windowrulev2 = [
             # Transparency and blur on all windows.
             "plugin:shadewindow chromakey, fullscreen:0"
-            "opacity 0.999, fullscreen:0" # Workaround for https://github.com/micha4w/Hypr-DarkWindow/issues/19
-
             "float, class:footclient"
             "workspace special:todo, initialTitle: Stories - Obsidian.*"
+            "float, class:org.kde.dolphin"
+            "size 70% 70%, class:org.kde.dolphin"
           ];
         };
       };
@@ -51,7 +54,7 @@
             mediaGif = ../../assets/gif/dancing.gif;
             sessionGif = ../../assets/gif/mihawk.gif;
           };
-          idle = {
+          general.idle = {
             timeouts = _:
               [
                 {
@@ -60,6 +63,31 @@
                 }
               ]
               ++ lib.drop 1 _;
+          };
+
+          appearance = {
+            transparency = {
+              enabled = true;
+              base = 0.98;
+              layers = 1;
+            };
+            padding.scale = 0.8;
+          };
+
+          bar = {
+            # Remove logo and activeWindow, maybe should be a more intuitive way to do this
+            entries = _: lib.sublist 1 2 _ ++ lib.drop 4 _;
+            tray = {
+              compact = true;
+              recolour = true;
+            };
+          };
+
+          lock.recolourLogo = true;
+
+          notifs = {
+            actionOnClick = true;
+            expire = true;
           };
         };
       };
