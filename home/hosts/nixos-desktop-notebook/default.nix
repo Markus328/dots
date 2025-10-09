@@ -19,6 +19,10 @@
       exec = ["hyprctl switchxkblayout at-translated-set-2-keyboard next"]; # Use workman by default
     };
   };
+
+  # Fix dolphin "Open with"
+  xdg.configFile."menus/applications.menu".source = "${pkgs.libsForQt5.kservice.bin}/etc/xdg/menus/applications.menu";
+
   home.packages = with pkgs; [
     kdePackages.dolphin
     kdePackages.kfind
