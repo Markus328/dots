@@ -74,9 +74,13 @@
             padding.scale = 0.8;
           };
 
+          # Compact bar items
           bar = {
-            # Remove logo and activeWindow, maybe should be a more intuitive way to do this
-            entries = _: lib.sublist 1 2 _ ++ lib.drop 4 _;
+            # Remove logo and power button
+            entries = lib.sublist 1 7;
+
+            workspaces.shown = 4;
+            clock.showIcon = false;
             tray = {
               compact = true;
               recolour = true;
