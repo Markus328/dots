@@ -14,6 +14,7 @@
       kbLock = "Ctrl+Alt, L";
       kbRestoreLock = "Ctrl+Alt+Shift, L";
       kbShowPanels = "Super, Backspace";
+      kbUngroup = "Super, y";
     };
     hyprland = {
       input.settings.input = _: builtins.removeAttrs _ ["kb_layout"]; # Dont mess with kb_layout
@@ -43,6 +44,10 @@
             "$kbToggleWindowFloating, centerwindow" # Also centers when floating
           ];
         };
+        binde.__replace = [
+          ["Ctrl+Alt, Tab" "Super, u"]
+          ["Ctrl+Shift+Alt, Tab" "Super, i"]
+        ];
 
         marks = {
           _0 = {

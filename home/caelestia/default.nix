@@ -42,6 +42,11 @@
             "size 70% 70%, class:org.kde.dolphin"
           ];
         };
+        misc.settings.misc = {
+          enable_swallow = true;
+          swallow_regex = "foot.*";
+          swallow_exception_regex = "wev";
+        };
       };
     };
 
@@ -50,7 +55,7 @@
         package = pkgs.caelestia-shell;
         settings = {
           paths = {
-            wallpaperDir = "~/Imagens/Wallpapers";
+            wallpaperDir = "~/Pictures/Wallpapers";
             mediaGif = ../../assets/gif/dancing.gif;
             sessionGif = ../../assets/gif/mihawk.gif;
           };
