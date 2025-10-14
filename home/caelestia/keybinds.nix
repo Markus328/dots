@@ -55,13 +55,10 @@
             submap = "mark";
           };
           _1.bind = [
-            # "Super, Y, exec, pypr toggle keepass"
+            "Super, H, exec, caelestia toggle password"
             "Super, K, exec, caelestia toggle communication"
             "Super, S, exec, caelestia toggle sysmon"
             "Super, L, exec, caelestia toggle todo"
-            # "Super, N, exec, pypr toggle volume"
-            # "Super, T, exec, pypr fetch_client_menu"
-            # "Super, H, exec, pypr unfetch_client"
             "Super, M , submap, global"
           ];
           _2.submap = "global";

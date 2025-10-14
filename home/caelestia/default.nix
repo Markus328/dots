@@ -33,13 +33,15 @@
         gestures.enable = false;
         execs.settings.exec-once = ["foot --server"];
         rules.settings = {
-          windowrulev2 = [
+          windowrule = [
             # Transparency and blur on all windows.
             "plugin:shadewindow chromakey, fullscreen:0"
             "float, class:footclient"
             "workspace special:todo, initialTitle: Stories - Obsidian.*"
             "float, class:org.kde.dolphin"
             "size 70% 70%, class:org.kde.dolphin"
+            "float, class:org.keepassxc.KeePassXC"
+            "workspace special:password, class:org.keepassxc.KeePassXC"
           ];
         };
         misc.settings.misc = {
@@ -132,6 +134,14 @@
               discord.enable = false;
             };
             sysmon.btop.command = _: lib.take 5 _ ++ ["${pkgs.btop}/bin/btop"]; # run btop directly instead of starting shell
+            password = {
+              keepass = {
+                enable = true;
+                match = [{class = "org.keepassxc.KeePassXC";}];
+                move = true;
+                command = ["keepassxc"];
+              };
+            };
           };
         };
       };

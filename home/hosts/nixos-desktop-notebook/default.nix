@@ -30,5 +30,6 @@
     qbittorrent
     kotatogram-desktop
     zapzap
+    libreoffice-qt6
   ];
 }
