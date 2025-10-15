@@ -20,6 +20,8 @@
         editor = "nvim";
         browser = "firefox";
 
+        volumeStep = 20;
+
         blurEnabled = false;
         shadowEnabled = false;
         windowOpacity = 0.999;
@@ -99,6 +101,9 @@
           notifs = {
             actionOnClick = true;
             expire = true;
+          };
+          services = {
+            maxVolume = 1.5;
           };
         };
       };
