@@ -15,6 +15,8 @@
       kbRestoreLock = "Ctrl+Alt+Shift, L";
       kbShowPanels = "Super, Backspace";
       kbUngroup = "Super, y";
+      kbGoToWs = "Ctrl";
+      kbMoveWinToWs = "Ctrl+Shift";
     };
     hyprland = {
       input.settings.input = _: builtins.removeAttrs _ ["kb_layout"]; # Dont mess with kb_layout
