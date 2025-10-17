@@ -32,7 +32,7 @@
     };
     caelestia-nix = {
       url = "github:Markus328/caelestia-nix";
-      # url = "git+file:///userdata/@workspace/caelestia-nix/caelestia.nix";
+      # url = "github:Markus328/caelestia-nix/staging";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         caelestia-shell.follows = "caelestia-shell";

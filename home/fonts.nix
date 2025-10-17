@@ -8,5 +8,6 @@ with pkgs; {
   fonts.fontconfig.enable = true;
   home.packages = [
     fantasque-sans-mono
+    nerd-fonts.jetbrains-mono
   ];
 }
