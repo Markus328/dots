@@ -116,7 +116,6 @@
     astrovim
     home-manager-wrapper
     imv
-
     pavucontrol
   ];
 }
