@@ -14,8 +14,6 @@
 
         windowGapsOut = 20;
         singleWindowGapsOut = 15;
-
-        cursorTheme = "Bibata-Modern-Ice";
       };
       hyprland = {
         gestures.enable = false;
