@@ -94,6 +94,10 @@
 
   services.udisks2.enable = true;
 
+  services.geoclue2 = {
+    enable = true;
+  };
+
   programs.adb.enable = true;
 
   programs.zsh.enable = true;
