@@ -14,20 +14,27 @@
 
         windowGapsOut = 20;
         singleWindowGapsOut = 15;
+
+        cursorTheme = "Bibata-Modern-Ice";
       };
       hyprland = {
         gestures.enable = false;
         rules.settings = {
-          windowrule = [
-            # Transparency and blur on all windows.
-            "plugin:shadewindow chromakey, fullscreen:0"
-            "float, class:footclient"
-            "workspace special:todo, initialTitle: Stories - Obsidian.*"
-            "float, class:org.kde.dolphin"
-            "size 70% 70%, class:org.kde.dolphin"
-            "float, class:org.keepassxc.KeePassXC"
-            "workspace special:password, class:org.keepassxc.KeePassXC"
-          ];
+          windowrule = {
+            __replace = [
+              ["blueman-manager" ".blueman-manager-wrapped"]
+            ];
+            __append = [
+              # Transparency and blur on all windows.
+              "plugin:shadewindow chromakey, fullscreen:0"
+              "float, class:footclient"
+              "workspace special:todo, initialTitle: Stories - Obsidian.*"
+              "float, class:org.kde.dolphin"
+              "size 70% 70%, class:org.kde.dolphin"
+              "float, class:org.keepassxc.KeePassXC"
+              "workspace special:password, class:org.keepassxc.KeePassXC"
+            ];
+          };
         };
         misc.settings.misc = {
           enable_swallow = true;
@@ -37,6 +44,8 @@
       };
     };
   };
+
+  home.pointerCursor.package = pkgs.bibata-cursors;
 
   wayland.windowManager.hyprland = {
     plugins = with pkgs.hyprlandPlugins; [hypr-darkwindow hypr-dynamic-cursors];

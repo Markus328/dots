@@ -10,7 +10,7 @@
       description = "Unblock all hardware devices";
       wantedBy = ["multi-user.target"];
       serviceConfig = {
-        ExecStart = "rfkill unblock all";
+        ExecStart = "${pkgs.util-linux}/bin/rfkill unblock all";
       };
     };
   };
