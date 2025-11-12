@@ -28,10 +28,10 @@
   virtualisation.libvirtd.enable = true;
 
   virtualisation.spiceUSBRedirection.enable = true;
-  services.logind = {
-    powerKey = "ignore";
-    powerKeyLongPress = "ignore";
-    lidSwitchDocked = "lock";
+  services.logind.settings.Login = {
+    handlePowerKey = "ignore";
+    handlePowerKeyLongPress = "ignore";
+    handleLidSwitchDocked = "lock";
   };
   # services.acpid = {
   #   enable = true;
@@ -45,7 +45,7 @@
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       font-awesome
       nerd-fonts.fira-code
       nerd-fonts.droid-sans-mono
@@ -72,7 +72,6 @@
   virtualisation = {
     podman.enable = true;
     waydroid.enable = true;
-    lxd.enable = true;
   };
 
   networking.firewall.checkReversePath = "loose";

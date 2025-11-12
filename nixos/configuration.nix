@@ -140,7 +140,7 @@
     compsize
     xdg-desktop-portal-gtk
     patchelf
-    microcodeIntel
+    microcode-intel
     # python38
     firefox
     wl-clipboard

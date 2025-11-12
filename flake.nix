@@ -11,11 +11,11 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland/tags/v0.50.1";
+      url = "github:hyprwm/Hyprland/tags/v0.51.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprdarkwindow = {
-      url = "github:micha4w/Hypr-DarkWindow/tags/v0.50.1";
+      url = "github:micha4w/Hypr-DarkWindow/tags/v0.51.1";
       inputs.hyprland.follows = "hyprland";
     };
     hypr-dynamic-cursors = {
