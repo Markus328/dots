@@ -16,7 +16,7 @@
 
       xwayland.force_zero_scaling = true; # Fix x11/electron apps in laptop display
 
-      exec = ["hyprctl switchxkblayout at-translated-set-2-keyboard next"]; # Use workman by default
+      exec-once = ["hyprctl switchxkblayout at-translated-set-2-keyboard next"]; # Use workman by default
     };
   };
 

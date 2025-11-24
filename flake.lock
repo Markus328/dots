@@ -67,11 +67,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1762907149,
-        "narHash": "sha256-kkvmVNjO7pRhNtHG4ra3z5THtmlC1qUgmI9ppO1fEg4=",
+        "lastModified": 1763996901,
+        "narHash": "sha256-5aNuGykBPz1wOh22y63CC45/MjF7EiXKRYDB7FQaum4=",
         "owner": "Markus328",
         "repo": "caelestia-nix",
-        "rev": "49cffc68bd0d3f8c968dab8faff61e783ec39537",
+        "rev": "f9fff2bf800a5cb56b269bffb5947d6a2b0faa0c",
         "type": "github"
       },
       "original": {

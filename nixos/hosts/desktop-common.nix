@@ -73,6 +73,7 @@
     podman.enable = true;
     waydroid.enable = true;
   };
+  networking.nftables.enable = true;
 
   networking.firewall.checkReversePath = "loose";
   services.tailscale.useRoutingFeatures = "both";

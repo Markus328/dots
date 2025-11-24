@@ -13,7 +13,16 @@
         };
       };
     };
-    fish.enable = false;
+    term = {
+      fish.enable = false;
+      starship = {
+        enableZshIntegration = true;
+        settings = {
+          battery.disabled = true;
+        };
+      };
+      eza.enableZshIntegration = true;
+    };
   };
 
   programs.foot = {
