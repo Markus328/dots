@@ -15,6 +15,7 @@
   programs.caelestia-dots = {
     enable = true;
 
+    editor.enable = false;
     caelestia = {
       shell = {
         package = pkgs.caelestia-shell;
@@ -24,6 +25,35 @@
             mediaGif = ../../assets/gif/dancing.gif;
             sessionGif = ../../assets/gif/mihawk.gif;
           };
+
+          launcher.actions.__infuse = [
+            {
+              # Append new actions
+              __append = [
+                {
+                  name = "Annotator";
+                  icon = "brush";
+                  dangerous = false;
+                  description = "Draw, write, annotate stuff on the screen";
+                  command = ["${pkgs.distrobox}/bin/distrobox" "enter" "apps" "--" "wayscriber" "--active"];
+                }
+              ];
+            }
+            # Choose which actions to show, in order
+            (actions:
+              map (name:
+                lib.findFirst (action: action.name == name) {
+                  inherit name;
+                  description = "Not found";
+                }
+                actions) [
+                "Calculator"
+                "Annotator"
+                "Wallpaper"
+                "Lock"
+                "Sleep"
+              ])
+          ];
           general.idle = {
             timeouts = _:
               [
@@ -65,6 +95,7 @@
           };
           services = {
             maxVolume = 1.5;
+            smartScheme = false;
           };
         };
       };
@@ -89,8 +120,8 @@
             communication = {
               telegram = {
                 enable = true;
-                match = [{class = "io.github.kotatogram";}];
-                command = ["kotatogram-desktop"];
+                match = [{class = "io.github.kukuruzka165.materialgram";}];
+                command = ["materialgram"];
               };
               whatsapp = {
                 command = ["zapzap"];
@@ -99,7 +130,7 @@
 
               discord.enable = false;
             };
-            sysmon.btop.command = _: lib.take 5 _ ++ ["${pkgs.btop}/bin/btop"]; # run btop directly instead of starting shell
+            sysmon.btop.command = _: lib.take 5 _ ++ ["zsh" "-c" "btop"];
             password = {
               keepass = {
                 enable = true;
@@ -114,7 +145,42 @@
     };
   };
 
-  programs.hm-ricing-mode.apps = {
+  systemd.user = lib.mkIf config.programs.caelestia-dots.caelestia.cli._meta.active {
+    timers."caelestia-wallpaper" = {
+      Unit = {
+        Description = "Hourly timer for caelestia-wallpaper";
+      };
+      Timer = {
+        OnCalendar = "hourly";
+      };
+      Install = {
+        WantedBy = ["timers.target"];
+      };
+    };
+    services."caelestia-wallpaper" = {
+      Unit = {
+        Description = "Ramdomize Caelestia wallpaper every hour";
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${pkgs.caelestia-cli}/bin/caelestia wallpaper -r -N";
+      };
+      Install = {
+        WantedBy = ["caelestia.service"];
+      };
+    };
+  };
+
+  programs.hm-ricing-mode.apps = lib.mkIf config.programs.caelestia-dots.caelestia._meta.active {
     caelestia.dest_dir = ".config/caelestia";
+  };
+
+  specialisation.niri = {
+    configuration = {
+      programs.caelestia-dots = {
+        caelestia.enable = lib.mkForce false;
+        hypr.enable = lib.mkForce false;
+      };
+    };
   };
 }

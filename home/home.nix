@@ -7,6 +7,7 @@
 }: {
   imports = [
     inputs.hm-ricing-mode.homeManagerModules.hm-ricing-mode
+    inputs.zen-browser.homeModules.beta
     ./caelestia
     ./hosts/nixos-desktop-notebook
     ./fonts.nix
@@ -16,6 +17,8 @@
   nixpkgs.config = {
     allowUnfree = true;
   };
+
+  programs.zen-browser.enable = true;
 
   home.username = "markus";
   home.homeDirectory = "/home/markus";
@@ -103,6 +106,7 @@
     indicator = true;
   };
 
+  services.easyeffects.enable = true;
   home.packages = with pkgs; [
     gcr
     libnotify
@@ -118,4 +122,14 @@
     imv
     pavucontrol
   ];
+
+  specialisation = {
+    default = {}; # Allow -c default to use the default specialisation
+    niri = {
+      configuration = {
+        home.sessionVariables.NIXOS_SPEC = "niri";
+        imports = [./niri];
+      };
+    };
+  };
 }

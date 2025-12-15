@@ -11,7 +11,7 @@
     settings = {
       monitor = [
         "desc:XXW HDMI,1440x900,0x0,1"
-        "eDP-1,preferred,1440x276, 1.33" # laptop display
+        "eDP-1,1440x810,1440x276, 1" # laptop display
       ];
 
       xwayland.force_zero_scaling = true; # Fix x11/electron apps in laptop display
@@ -28,8 +28,10 @@
     kdePackages.kfind
 
     qbittorrent
-    kotatogram-desktop
+    materialgram
     zapzap
     libreoffice-qt6
+    android-studio
+    waydroid-helper
   ];
 }

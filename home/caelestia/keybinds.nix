@@ -44,6 +44,7 @@
           __append = [
             "Super, Return, focusmonitor, +1"
             "$kbToggleWindowFloating, centerwindow" # Also centers when floating
+            "Ctrl, slash, exec, mpv $(wl-paste)"
           ];
         };
         binde.__replace = [

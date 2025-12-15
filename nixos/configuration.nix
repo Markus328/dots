@@ -4,11 +4,15 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
-}: {
+}: let
+  inherit (pkgs.stdenv.hostPlatform) system;
+in {
   imports = [
     ./hardware-configuration.nix
+    ./cachix.nix
   ];
 
   services.udev.extraRules = ''
@@ -91,6 +95,7 @@
     settings.PasswordAuthentication = true;
   };
   services.tailscale.enable = true;
+  services.resolved.enable = true;
 
   services.udisks2.enable = true;
 
@@ -103,8 +108,11 @@
   programs.zsh.enable = true;
   programs.hyprland = {
     enable = true;
+    withUWSM = true;
     package = pkgs.hyprland;
   };
+
+  services.gnome.gnome-keyring.enable = true;
   security.pam.loginLimits = [
     {
       domain = "@users";
@@ -113,12 +121,8 @@
       value = 1;
     }
   ];
-  security.pam.services.gnome-keyring.text = with pkgs; ''
-    auth     optional    ${gnome-keyring}/lib/security/pam_gnome_keyring.so
-    session  optional    ${gnome-keyring}/lib/security/pam_gnome_keyring.so auto_start
 
-    password  optional    ${gnome-keyring}/lib/security/pam_gnome_keyring.so
-  '';
+  security.pam.services.login.enableGnomeKeyring = true;
 
   #USERS
   users.users = {
@@ -138,7 +142,6 @@
     zip
     unzip
     compsize
-    xdg-desktop-portal-gtk
     patchelf
     microcode-intel
     # python38
@@ -146,6 +149,7 @@
     wl-clipboard
 
     nixos-rebuild-wrapper
+    nixos-chspec
   ];
 
   #EXTRA
@@ -183,4 +187,21 @@
   };
 
   system.stateVersion = "25.11";
+
+  specialisation = {
+    default = {}; # Allow -c default to use the default specialisation
+    niri = {
+      configuration = {
+        environment.sessionVariables.NIXOS_SPEC = "niri";
+        imports = [
+          inputs.niri-flake.nixosModules.niri
+        ];
+        programs.niri = {
+          enable = true;
+          package = pkgs.niri-unstable;
+        };
+        programs.hyprland.enable = lib.mkForce false;
+      };
+    };
+  };
 }

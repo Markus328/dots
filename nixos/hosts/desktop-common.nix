@@ -70,9 +70,16 @@
 
   # Virtualization
   virtualisation = {
-    podman.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
     waydroid.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [podman-compose];
+
   networking.nftables.enable = true;
 
   networking.firewall.checkReversePath = "loose";
