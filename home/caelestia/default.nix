@@ -17,6 +17,7 @@
 
     editor.enable = false;
     caelestia = {
+      enable = config.programs.caelestia-dots.hypr._meta.active; # do not work outside hyprland in pratique
       shell = {
         package = pkgs.caelestia-shell;
         settings = {
@@ -173,14 +174,5 @@
 
   programs.hm-ricing-mode.apps = lib.mkIf config.programs.caelestia-dots.caelestia._meta.active {
     caelestia.dest_dir = ".config/caelestia";
-  };
-
-  specialisation.niri = {
-    configuration = {
-      programs.caelestia-dots = {
-        caelestia.enable = lib.mkForce false;
-        hypr.enable = lib.mkForce false;
-      };
-    };
   };
 }

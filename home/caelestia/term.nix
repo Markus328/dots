@@ -2,7 +2,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   programs.caelestia-dots = {
     hypr.variables.terminal = "footclient";
     foot = {
@@ -35,9 +36,11 @@
   };
 
   # Caelestia colors for zsh
-  programs.zsh.initContent = lib.mkIf config.programs.caelestia-dots.caelestia.cli._meta.active (lib.mkBefore ''
-    cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
-  '');
+  # programs.zsh.initContent = lib.mkIf config.programs.caelestia-dots.caelestia.cli._meta.active (
+  #   lib.mkBefore ''
+  #     cat ~/.local/state/caelestia/sequences.txt 2> /dev/null
+  #   ''
+  # );
 
   programs.hm-ricing-mode.apps = {
     foot.dest_dir = ".config/foot";
