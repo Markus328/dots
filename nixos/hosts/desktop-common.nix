@@ -1,16 +1,19 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ../fs/desktop.nix
+    ../../secrets/templates.nix
   ];
 
   services.xserver = {
     enable = true;
-    excludePackages = with pkgs; [xterm];
+    excludePackages = with pkgs; [ xterm ];
 
     xkb = {
       layout = "us,br";
@@ -23,16 +26,16 @@
   services.libinput.enable = true;
   programs.virt-manager.enable = true;
 
-  users.groups.libvirtd.members = ["markus"];
+  users.groups.libvirtd.members = [ "markus" ];
 
   virtualisation.libvirtd.enable = true;
 
   virtualisation.spiceUSBRedirection.enable = true;
   services.logind.settings.Login = {
-    handlePowerKey = "ignore";
-    handlePowerKeyLongPress = "ignore";
-    handleLidSwitchDocked = "lock";
+    handleLidSwitch = "lock";
+    handleLidSwitchExternalPower = "lock";
   };
+  # services.upower.ignoreLid = true;
   # services.acpid = {
   #   enable = true;
   #   handlers."acpi-power" = {
@@ -78,10 +81,54 @@
     waydroid.enable = true;
   };
 
-  environment.systemPackages = with pkgs; [podman-compose];
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
 
-  networking.nftables.enable = true;
+    settings = {
+      # capture = "kms";
+    };
+  };
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt # QSV
+    ];
+  };
+
+  services.flatpak.enable = true;
+
+  environment.systemPackages = with pkgs; [ podman-compose ];
+
+  # networking.nftables.enable = true;
 
   networking.firewall.checkReversePath = "loose";
   services.tailscale.useRoutingFeatures = "both";
+
+  # CLOUDFLARED
+  services.cloudflared = {
+    enable = true;
+    certificateFile = config.sops.secrets.cloudflared-cert.path;
+  };
+
+  specialisation.gaming.configuration = {
+    environment.etc."specialisation".text = "gaming";
+    programs.steam = {
+      enable = true;
+    };
+    programs.gamemode.enable = true;
+    nixpkgs.config.allowUnfreePredicate =
+      pkg:
+      builtins.elem (lib.getName pkg) [
+        "steam"
+        "steam-original"
+        "steam-unwrapped"
+        "steam-run"
+      ];
+  };
 }
