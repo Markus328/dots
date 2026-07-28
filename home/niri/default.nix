@@ -9,8 +9,10 @@
   imports = [
     inputs.niri-flake.homeModules.niri
     ./noctalia.nix
+    ./dms.nix
   ];
 
+  programs.dank-material-shell.enable = lib.mkForce false; # Using noctalia
   home.packages = [ pkgs.xwayland-satellite ];
   programs.niri = {
     enable = true;

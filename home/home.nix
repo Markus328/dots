@@ -16,6 +16,8 @@
     ./niri
   ];
 
+  programs.caelestia-dots.hypr.enable = lib.mkForce false; # Do not using Hyprland
+
   nixpkgs.config = {
     allowUnfree = true;
   };

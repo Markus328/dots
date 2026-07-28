@@ -233,4 +233,8 @@
         Mod+Backspace { spawn-sh "noctalia msg panel-toggle control-center"; }
     }
   '';
+
+  # Force update files that noctalia messes to apply the theme, even if theres no reason.
+  xdg.configFile."btop/btop.conf".force = true;
+  xdg.configFile."foot/foot.ini".force = true;
 }
