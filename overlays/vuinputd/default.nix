@@ -44,4 +44,6 @@ rustPlatform.buildRustPackage (finalAttrs: {
     cp vuinputd/udev/*.rules $out/lib/udev/rules.d/
     cp vuinputd/udev/*.hwdb $out/lib/udev/hwdb.d/
   '';
+  
+    meta.mainProgram = "vuinputd";
 })

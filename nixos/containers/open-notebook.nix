@@ -122,7 +122,7 @@
 
           serviceConfig = {
             EnvironmentFile = "/data/open-notebook/.env";
-            ExecStart = lib.getExe pkgs.open-notebook;
+            ExecStart = lib.getExe' pkgs.open-notebook "open-notebook";
             WorkingDirectory = "/data/open-notebook";
           };
         };

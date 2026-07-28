@@ -140,9 +140,9 @@ let
     mkdir -p open_notebook/database
     ln -sf ${open-notebook-api}/migrations open_notebook/database
 
-    ${lib.getExe open-notebook-api} &
+    ${lib.getExe' open-notebook-api "open-notebook-api"} &
     ${open-notebook-api}/bin/open-notebook-worker >/dev/null &
-    PORT=8502 exec ${lib.getExe open-notebook-frontend} 
+    PORT=8502 exec ${lib.getExe' open-notebook-frontend "open-notebook-frontend"}
   '';
 in
 buildEnv {

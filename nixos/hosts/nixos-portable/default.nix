@@ -40,6 +40,8 @@
 
   networking.hostName = "nixos-portable";
 
+    system.stateVersion = "25.11";
+  
   hardware.graphics.extraPackages = with pkgs; [
     vaapiIntel
     intel-media-driver
