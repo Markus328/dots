@@ -56,7 +56,6 @@ in
         openwatchparty = callPackage ./openwatchparty.nix { };
         vuinputd = callPackage ./vuinputd { };
         open-notebook = callPackage ./open-notebook.nix { inherit inputs; };
-        # litellm = callPackage ./litellm.nix { inherit inputs; };
         jellyfin-vue = callPackage ./jellyfin-vue.nix { };
         apollo = callPackage ./apollo { };
       }
