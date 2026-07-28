@@ -4,20 +4,29 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     inputs.niri-flake.homeModules.niri
-    ./dms.nix
+    ./noctalia.nix
   ];
 
-  home.pointerCursor = {
-    name = "Bibata-Modern-Ice";
-    package = pkgs.bibata-cursors;
-  };
-
+  home.packages = [ pkgs.xwayland-satellite ];
   programs.niri = {
     enable = true;
     package = pkgs.niri-unstable;
+  };
+
+  xdg.portal = {
+    enable = true;
+    config.niri = {
+      "default" = "gnome;gtk";
+      "org.freedesktop.impl.portal.FileChooser" = [ "gtk" ];
+      "org.freedesktop.impl.portal.Access" = "gtk";
+      "org.freedesktop.impl.portal.Notification" = "gtk";
+      "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
+    };
+    extraPortals = with pkgs; [ xdg-desktop-portal-gtk ];
   };
 
   xdg.configFile."niri/config.kdl".text = ''
@@ -45,7 +54,7 @@
 
         mouse {
             // natural-scroll
-            // accel-speed 0.2
+            accel-speed 0.9
             // accel-profile "flat"
             // scroll-method "no-scroll"
         }
@@ -79,6 +88,11 @@
 
     workspace "communication" {
         open-on-output "eDP-1"
+        layout {
+            focus-ring {
+                active-color "purple"
+            }
+        }
     }
 
     layout {
@@ -87,6 +101,7 @@
         center-focused-column "never"
         always-center-single-column
         empty-workspace-above-first
+        default-column-display "tabbed"
 
         preset-column-widths {
             proportion 0.33333
@@ -132,6 +147,9 @@
             // top 16
             // bottom 64
         }
+        tab-indicator {
+            hide-when-single-tab
+        }
     }
 
 
@@ -170,13 +188,22 @@
         open-on-workspace "communication"
     }
 
-    // Block out password managers from screencasts.
+    // Block from screencast
     window-rule {
         match app-id=r#"^org\.keepassxc\.KeePassXC$"#
-        match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
         block-out-from "screencast"
     }
+
+    ${lib.optionalString config.programs.noctalia.enable ''
+      window-rule {
+        match app-id="dev.noctalia.Noctalia"
+        open-floating true
+        default-column-width { fixed 1080; }
+        default-window-height { fixed 920; }
+      }
+    ''}
+
 
     // Indicate screencasted windows with red colors.
     window-rule {
@@ -210,14 +237,25 @@
         open-on-workspace "communication"
     }
 
-    layer-rule {
-      match namespace="^dms:blurwallpaper$"
-      place-within-backdrop true
-    }
+    ${lib.optionalString config.programs.dank-material-shell.enable ''
+      layer-rule {
+        match namespace="^dms:blurwallpaper$"
+        place-within-backdrop true
+      }
+    ''}
+    ${lib.optionalString config.programs.noctalia.enable ''
+      layer-rule {
+        match namespace="^noctalia-backdrop"
+        place-within-backdrop true
+      }
+    ''}
 
-    // Make the Telegram media viewer open in windowed mode.
+    // Big floating windows
     window-rule {
-        match app-id=r#"^io.github.kukuruzka165.materialgram$"# title="^Media viewer$"
+        match app-id=r#".*materialgram$"# title="^Media viewer$"
+        match app-id=r#"^org.keepassxc.KeePassXC$"#
+        match app-id="org.kde.dolphin"
+
 
         open-fullscreen false
         open-floating true
@@ -246,13 +284,13 @@
     binds {
         Mod+Shift+Slash { show-hotkey-overlay; }
 
+        Mod+Ctrl+Space {switch-layout "next"; }
+
         Mod+Ctrl+L { set-dynamic-cast-window;}
         Mod+Ctrl+K { set-dynamic-cast-monitor;}
         Mod+Ctrl+V { clear-dynamic-cast-target;}
 
         Ctrl+Alt+A hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-        Ctrl+Alt+Delete  hotkey-overlay-title="Open Launcher" {spawn-sh "noctalia-shell ipc call sessionMenu toggle";}
-        Ctrl+Alt+O hotkey-overlay-title="Lockscreen" {spawn-sh "noctalia-shell ipc call lockScreen lock";}
 
         Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
@@ -435,7 +473,12 @@
         honor-xdg-activation-with-invalid-serial
         deactivate-unfocused-windows
     }
-    ${lib.optionalString (config.programs.dankMaterialShell.enable) "include \"dms/binds.kdl\""}
+    include "${./nirimation/roll-drop.kdl}"
+    ${lib.optionalString (config.programs.dank-material-shell.enable) "include \"dms/binds.kdl\""}
+    ${lib.optionalString (config.programs.noctalia.enable) ''
+      include "noctalia-binds.kdl"
+      include "noctalia.kdl"
+    ''}
   '';
 
   programs.hm-ricing-mode.apps.niri.dest_dir = ".config/niri";

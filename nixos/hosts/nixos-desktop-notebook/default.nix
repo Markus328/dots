@@ -12,6 +12,12 @@
     ../notebook-common.nix
   ];
 
+  networking.firewall.allowedTCPPorts = [
+    8080
+    5349
+  ];
+  networking.firewall.allowedUDPPorts = [ 5349 ];
+
   # Device-specific boot configuration
   boot.initrd.kernelModules = [
     "vmd"
