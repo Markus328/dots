@@ -1,0 +1,22 @@
+# Nix build artifacts
+**/result
+
+.config/
+.local/
+.p10k.zsh
+.tmux.conf
+.zlogin
+.zshrc
+
+.gitmodules
+
+# Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Editor directories
+.vscode/
+.idea/
+*.sublime-*
