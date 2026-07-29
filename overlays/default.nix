@@ -45,7 +45,7 @@ in
               tabby-agent
               go
               nil
-              alejandra
+              nixfmt
               clang-tools
               shellcheck
               python3
