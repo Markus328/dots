@@ -119,5 +119,9 @@
 
       homeConfigurations."markus@nixos-desktop-notebook" = homeConfiguration "nixos-desktop-notebook";
       homeConfigurations."markus@nixos-remote" = homeConfiguration "nixos-remote";
+
+      devShells."${system}".default = pkgs.mkShell {
+        packages = with pkgs; [ nixfmt ];
+      };
     };
 }

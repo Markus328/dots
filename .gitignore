@@ -20,3 +20,6 @@
 .vscode/
 .idea/
 *.sublime-*
+
+# Direnv
+.direnv/
