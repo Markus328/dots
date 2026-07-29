@@ -10,7 +10,7 @@
   makeWrapper,
   buildNpmPackage,
   buildEnv,
-  inter,
+  google-fonts,
   ...
 }:
 let
@@ -19,8 +19,8 @@ let
   src = fetchFromGitHub {
     owner = "lfnovo";
     repo = "open-notebook";
-    rev = "v1.13.0";
-    hash = "sha256-Ly23IFq450YVzDHv7jEMYPqLFxCQhvNVDNvgJyKK1x4=";
+    rev = "62b071b9172a2c823ddd918e0947a782df63be13";
+    hash = "sha256-PpQgKghFSHad6uF9vPlFhpMbrf2bFHZft3eHwy9NM2E=";
   };
 
   open-notebook-api =
@@ -107,34 +107,52 @@ let
     in
     api;
 
-  open-notebook-frontend = buildNpmPackage {
-    name = "open-notebook-frontend";
-    src = "${src}/frontend";
-    npmDepsHash = "sha256-MLA3+U4N5bN2z6W/LNSAGGG3ygc23JN/NbJWb3m20kM=";
-    postPatch = ''
-      ln -sf ${inter}/share/fonts/truetype/* ./src/app/
-      substituteInPlace src/app/layout.tsx \
-        --replace-fail \
-          'import { Inter } from "next/font/google";' \
-          'import Inter from "next/font/local";'
-      substituteInPlace src/app/layout.tsx \
-        --replace-fail \
-          'const inter = Inter({ subsets: ["latin"] });' \
-          'const inter = Inter({src: "./InterVariable.ttf"});'
+  open-notebook-frontend =
+    let
 
-      substituteInPlace package.json \
+      fonts = google-fonts.override {
+        fonts = [
+          "InstrumentSans"
+          "BricolageGrotesque"
+          "SplineSansMono"
+        ];
+      };
+
+    in
+    buildNpmPackage {
+      name = "open-notebook-frontend";
+      src = "${src}/frontend";
+      npmDepsHash = "sha256-gwxGxzYt1dgo0iYv8qa9dl1GrAhoLkZOE01m7KuZE0g=";
+      postPatch = ''
+        # Replace network fonts to to local fonts
+        ln -sf ${fonts}/share/fonts/truetype/* src/app/
+        substituteInPlace src/app/layout.tsx \
           --replace-fail \
-            '"private": true,' \
-            '"private": true,
-        "bin": {
-          "open-notebook-frontend": ".next/standalone/server.js"
-        },'
-    '';
-    postInstall = ''
-      ln -sf $out/lib/node_modules/frontend/.next/static $out/lib/node_modules/frontend/.next/standalone/.next
-      ln -sf $out/lib/node_modules/frontend/public $out/lib/node_modules/frontend/.next/standalone/public
-    '';
-  };
+            $'import {\n  Bricolage_Grotesque,\n  Instrument_Sans,\n  Spline_Sans_Mono,\n} from "next/font/google";' \
+            'import Fonts from "next/font/local"' \
+          --replace-fail \
+            $'const instrumentSans = Instrument_Sans({\n  subsets: ["latin"]' \
+            $'const instrumentSans = Fonts({\n  src: "./InstrumentSans[wdth,wght].ttf"' \
+          --replace-fail \
+            $'const bricolageGrotesque = Bricolage_Grotesque({\n  subsets: ["latin"],\n  weight: ["600", "700"]' \
+            $'const bricolageGrotesque = Fonts({\n  src: "BricolageGrotesque[opsz,wdth,wght].ttf"' \
+          --replace-fail \
+            $'const splineSansMono = Spline_Sans_Mono({\n  subsets: ["latin"]' \
+            $'const splineSansMono = Fonts({\n  src: "SplineSansMono[wght].ttf"'
+
+        substituteInPlace package.json \
+            --replace-fail \
+              '"private": true,' \
+              '"private": true,
+          "bin": {
+            "open-notebook-frontend": ".next/standalone/server.js"
+          },'
+      '';
+      postInstall = ''
+        ln -sf $out/lib/node_modules/frontend/.next/static $out/lib/node_modules/frontend/.next/standalone/.next
+        ln -sf $out/lib/node_modules/frontend/public $out/lib/node_modules/frontend/.next/standalone/public
+      '';
+    };
 
   open-notebook = writeShellScriptBin "open-notebook" ''
     mkdir -p open_notebook/database
