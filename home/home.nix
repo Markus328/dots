@@ -32,7 +32,7 @@
 
   programs.zsh = {
     enable = true;
-    dotDir = ".config/zsh";
+    dotDir = config.home.homeDirectory + "/.config/zsh";
     initContent = ''
       source ~/.zshrc
     '';
@@ -48,6 +48,7 @@
   };
 
   home.pointerCursor = {
+    enable = true;
     name = lib.mkDefault "Bibata-Modern-Ice";
     package = lib.mkDefault pkgs.bibata-cursors;
     size = 24;
@@ -78,12 +79,10 @@
 
   programs.git = {
     enable = true;
-    userName = "Markus328";
-    userEmail = "markus328@tutanota.com";
-    aliases = {
-      s = "status";
-    };
-    extraConfig = {
+    settings = {
+      user.name = "Markus328";
+      user.email = "markus328@tutanota.com";
+      alias.s = "status";
       credential.helper = "${pkgs.git-credential-keepassxc}/bin/git-credential-keepassxc";
     };
   };
