@@ -41,7 +41,7 @@ in
 
     # Disable containers when gaming
     specialisation.gaming.configuration = {
-      myContainers.nixarr.enable = lib.mkForce false;
+      # myContainers.nixarr.enable = lib.mkForce false;
       myContainers.nixos-remote.enable = lib.mkForce false;
       myContainers.open-notebook.enable = lib.mkForce false;
     };

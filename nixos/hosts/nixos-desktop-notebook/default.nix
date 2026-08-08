@@ -45,12 +45,12 @@
           jq = lib.getExe pkgs.jq;
         in
         pkgs.writeShellScript "fix-abs-input-sunshine" ''
-          ${wlr-randr} --output HDMI-A-1 --off
+          ${wlr-randr} --output HDMI-A-1 --off || true
           preferredPos="$(${wlr-randr} --json | ${jq} '.[] | select(.name == "eDP-1").position | "\(.x),\(.y)"' -r)"
           ${wlr-randr} --output eDP-1 --pos 0,0
           systemctl --user restart sunshine
           sleep 2 && ${wlr-randr} --output eDP-1 --pos "$preferredPos"
-          ${wlr-randr} --output HDMI-A-1 --on
+          ${wlr-randr} --output HDMI-A-1 --on || true
         '';
     };
   };
