@@ -237,4 +237,10 @@
   # Force update files that noctalia messes to apply the theme, even if theres no reason.
   xdg.configFile."btop/btop.conf".force = true;
   xdg.configFile."foot/foot.ini".force = true;
+
+  programs.caelestia-dots = {
+    foot.settings.main.include = [ "~/.config/foot/themes/noctalia" ];
+    btop.settings.color_theme = "noctalia";
+  };
+
 }

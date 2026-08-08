@@ -27,7 +27,15 @@
 
   # Fix dolphin "Open with"
   xdg.configFile."menus/applications.menu".source =
-    "${pkgs.kdePackages.kservice}/etc/xdg/menus/applications.menu";
+    let
+
+      plasma-applications-menu = pkgs.fetchurl {
+        url = "https://github.com/KDE/plasma-workspace/raw/4c3ace3dfc7b06b3107b52b6e09508be14e73e8a/menu/desktop/plasma-applications.menu";
+        hash = "sha256-pVvOXRPvpsnhmGEAldOKpOuGJXo2cNSIQidecm5wK/Y=";
+      };
+
+    in
+    plasma-applications-menu;
 
   xdg.configFile."sunshine/apps.json".text =
     let
@@ -75,6 +83,23 @@
           -g '3,RL,N,S,R,niri msg action focus-column-right'    
       '';
 
+      inhibitON =
+        if config.programs.dank-material-shell.enable then
+          "dms ipc inhibit enable"
+        else if config.programs.noctalia.enable then
+          "noctalia msg caffeine-enable"
+        else
+          "";
+      inhibitOFF =
+        if config.programs.dank-material-shell.enable then
+          "dms ipc inhibit disable"
+        else if config.programs.noctalia.enable then
+          "noctalia msg caffeine-disable"
+        else
+          "";
+
+      lock = "loginctl lock-session";
+
     in
     builtins.toJSON {
       apps = [
@@ -100,10 +125,10 @@
               do = "sh -c \"wlr-randr --output Virtual-1 --custom-mode \${SUNSHINE_CLIENT_WIDTH}x\${SUNSHINE_CLIENT_HEIGHT}@60 --scale 1.25\"";
             }
             {
-              do = "dms ipc inhibit enable";
-              undo = "dms ipc inhibit disable";
+              do = "${inhibitON}";
+              undo = "${inhibitOFF}";
             }
-            { undo = "dms ipc lock lock"; }
+            { undo = "${lock}"; }
           ];
         }
         {
@@ -132,10 +157,10 @@
               undo = "sh -c \"wlr-randr --output eDP-1 --custom-mode 1440x810@60 --scale 1\"";
             }
             {
-              do = "dms ipc inhibit enable";
-              undo = "dms ipc inhibit disable";
+              do = "${inhibitON}";
+              undo = "${inhibitOFF}";
             }
-            { undo = "dms ipc lock"; }
+            { undo = "${lock}"; }
           ];
         }
         {
