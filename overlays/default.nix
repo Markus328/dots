@@ -9,6 +9,17 @@ let
   inherit (pkgs.stdenv.hostPlatform) system;
 in
 {
+
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "steam"
+      "steam-original"
+      "steam-unwrapped"
+      "steam-run"
+      "osu-lazer-bin"
+    ];
+
   nixpkgs.overlays = [
     inputs.hyprland.overlays.default
     inputs.niri-flake.overlays.niri

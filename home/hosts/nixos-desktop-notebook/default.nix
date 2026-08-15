@@ -202,6 +202,10 @@
           ${lib.getExe pkgs.wlr-randr} --output eDP-1 --pos 2000,265 || true # place it far to avoid cursor lose focus of game
         ''
       );
+
+      home.packages = with pkgs; [
+        osu-lazer-bin
+      ];
     };
   };
 }
