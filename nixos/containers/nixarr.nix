@@ -195,6 +195,17 @@
           RootDirectory = lib.mkForce null;
         };
 
+        # Resource Controls
+        systemd.services.prowlarr.serviceConfig = {
+          MemoryHigh = "200M";
+        };
+        systemd.services.sonarr.serviceConfig = {
+          MemoryHigh = "200M";
+        };
+        systemd.services.jellyfin.serviceConfig = {
+          MemoryHigh = "256M";
+        };
+
         hardware.graphics = {
           enable = true;
           extraPackages = with pkgs; [
