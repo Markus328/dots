@@ -89,15 +89,6 @@
         lid-close { spawn "loginctl" "lock-session"; }
     }
 
-    workspace "communication" {
-        open-on-output "eDP-1"
-        layout {
-            focus-ring {
-                active-color "purple"
-            }
-        }
-    }
-
     layout {
         gaps 16
 
