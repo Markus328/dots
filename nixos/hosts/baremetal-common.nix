@@ -3,15 +3,19 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     ../hardware-configuration.nix
     ../containers
     ../../secrets
   ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
-  boot.extraModulePackages = with config.boot.kernelPackages; [evdi];
-  boot.kernelParams = ["mitigations=off" "boot.shell_on_fail"];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ evdi ];
+  boot.kernelParams = [
+    "mitigations=off"
+    "boot.shell_on_fail"
+  ];
 
   boot.loader = {
     efi = {
@@ -53,7 +57,7 @@
           OnCalendar = "*-*-* 17:00:00";
           Persistent = true;
         };
-        wantedBy = ["timers.target"];
+        wantedBy = [ "timers.target" ];
       };
       auto-gc = {
         enable = true;
@@ -62,7 +66,7 @@
           OnCalendar = "Sun *-*-* 00:00:00";
           Persistent = true;
         };
-        wantedBy = ["timers.target"];
+        wantedBy = [ "timers.target" ];
       };
     };
   };
@@ -84,18 +88,24 @@
     openFirewall = true;
   };
 
-  networking.nameservers = ["1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one"];
+  networking.nameservers = [
+    "1.1.1.1#one.one.one.one"
+    "1.0.0.1#one.one.one.one"
+  ];
 
   services.resolved = {
     enable = true;
-      settings = {
-        Resolve = {
-          DNSSEC = "true";
-          Domains = ["~."];
-          FallbackDNS = ["1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one"];
-          DNSOverTLS = "true";
-        };
+    settings = {
+      Resolve = {
+        DNSSEC = "true";
+        Domains = [ "~." ];
+        FallbackDNS = [
+          "1.1.1.1#one.one.one.one"
+          "1.0.0.1#one.one.one.one"
+        ];
+        DNSOverTLS = "true";
       };
+    };
   };
 
   networking = {
@@ -119,6 +129,8 @@
     openDefaultPorts = true;
     systemService = false; # Managed by home-manager
   };
+
+  services.displayManager.sddm.enable = true;
 
   specialisation.gaming.configuration = {
     services.syncthing.enable = lib.mkForce false;

@@ -17,20 +17,20 @@
     allowedUDPPorts = allowedTCPPorts;
   };
 
-  systemd.services =
-    let
-      genCloudService = tunnel-secret: name: {
-        description = "Cloudflare tunnel for ${name} instance";
-        wantedBy = [ "container@nixarr.service" ];
-        serviceConfig = {
-          ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --config=${tunnel-secret} --no-autoupdate --origincert=${config.sops.secrets.cloudflared-cert.path} run";
-        };
-      };
-    in
-    {
-      cloudflare-tunnel-jellyfin = genCloudService config.sops.secrets.cloudflared-jelly.path "Jellyfin";
-      cloudflare-tunnel-owp = genCloudService config.sops.secrets.cloudflared-owp.path "OWP";
-    };
+  # systemd.services =
+  #   let
+  #     genCloudService = tunnel-secret: name: {
+  #       description = "Cloudflare tunnel for ${name} instance";
+  #       wantedBy = [ "container@nixarr.service" ];
+  #       serviceConfig = {
+  #         ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --config=${tunnel-secret} --no-autoupdate --origincert=${config.sops.secrets.cloudflared-cert.path} run";
+  #       };
+  #     };
+  #   in
+  #   {
+  #     cloudflare-tunnel-jellyfin = genCloudService config.sops.secrets.cloudflared-jelly.path "Jellyfin";
+  #     cloudflare-tunnel-owp = genCloudService config.sops.secrets.cloudflared-owp.path "OWP";
+  #   };
 
   containers.nixarr = {
     allowedDevices = [

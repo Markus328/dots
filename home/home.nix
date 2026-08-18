@@ -154,6 +154,7 @@
         ''
       );
       services.easyeffects.enable = lib.mkForce false;
+      services.udiskie.enable = lib.mkForce false;
     };
   };
 }

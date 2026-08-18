@@ -194,7 +194,10 @@
   specialisation = {
     gaming.configuration = {
       services.syncthing.enable = lib.mkForce false;
-      services.kdeconnect.enable = lib.mkForce false;
+      services.kdeconnect = {
+        enable = lib.mkForce false;
+        indicator = lib.mkForce false;
+      };
 
       home.activation.monitor-setup = lib.mkForce (
         lib.hm.dag.entryAfter [ "writeBoundary" ] ''

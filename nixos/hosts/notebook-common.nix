@@ -1,14 +1,16 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
-}: {
+}:
+{
   systemd.services = {
     rfkill-unblock-all = {
       enable = true;
       description = "Unblock all hardware devices";
-      wantedBy = ["multi-user.target"];
+      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         ExecStart = "${pkgs.util-linux}/bin/rfkill unblock all";
       };
@@ -40,5 +42,9 @@
       START_CHARGE_THRESH_BAT0 = 60; # 40 and bellow it starts to charge
       STOP_CHARGE_THRESH_BAT0 = 80; # 80 and above it stops charging
     };
+  };
+
+  specialisation.gaming.configuration = {
+    services.blueman.enable = lib.mkForce false;
   };
 }

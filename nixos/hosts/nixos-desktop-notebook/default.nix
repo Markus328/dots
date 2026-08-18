@@ -65,8 +65,6 @@
     open-notebook.enable = true;
   };
 
-  services.displayManager.sddm.enable = true;
-
   # Device-specific networking
   networking.hostName = "nixos-desktop-notebook";
 }

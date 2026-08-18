@@ -111,16 +111,19 @@
   services.tailscale.useRoutingFeatures = "both";
 
   # CLOUDFLARED
-  services.cloudflared = {
-    enable = true;
-    certificateFile = config.sops.secrets.cloudflared-cert.path;
-  };
+  # services.cloudflared = {
+  #   enable = true;
+  #   certificateFile = config.sops.secrets.cloudflared-cert.path;
+  # };
 
   specialisation.gaming.configuration = {
     environment.etc."specialisation".text = "gaming";
     programs.steam = {
       enable = true;
     };
+    virtualisation.waydroid.enable = lib.mkForce false;
+    virtualisation.libvirtd.enable = lib.mkForce false;
+    programs.virt-manager.enable = lib.mkForce false;
     programs.gamemode.enable = true;
   };
 }

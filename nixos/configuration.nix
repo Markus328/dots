@@ -114,5 +114,9 @@ in
 
   documentation.man.cache.enable = true;
 
+  specialisation.gaming.configuration = {
+    services.geoclue2.enable = lib.mkForce false;
+  };
+
   system.stateVersion = "25.11";
 }
