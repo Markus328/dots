@@ -186,6 +186,12 @@
     vesktop
   ];
 
+  # Limit Zen's resources
+  xdg.configFile."systemd/user/app-zen\\x2dbeta@.service.d/50-limits.conf".text = ''
+    [Service]
+    MemoryHigh=2G
+  '';
+
   home.activation.monitor-setup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     ${lib.getExe pkgs.wlr-randr} --output HDMI-A-1 --pos 0,0 || true
     ${lib.getExe pkgs.wlr-randr} --output eDP-1 --pos 1440,265 || true

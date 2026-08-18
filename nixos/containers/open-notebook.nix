@@ -153,7 +153,10 @@
       "/userdata/@workspace/open-notebook/data/litellm/config.yaml:/app/config.yaml"
     ];
 
-    extraOptions = [ "--network=host" ];
+    extraOptions = [
+      "--network=host"
+      "-m=750M"
+    ];
     environmentFiles = [ config.sops.secrets.litellm-secrets.path ];
   };
 }
