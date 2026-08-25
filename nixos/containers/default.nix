@@ -22,12 +22,12 @@ in
 {
   imports = [
     inputs.extra-container.nixosModules.default
-    (condImport ./nixarr.nix "nixarr")
+    (condImport ./media-server.nix "media-server")
     (condImport ./nixos-remote.nix "nixos-remote")
     (condImport ./open-notebook.nix "open-notebook")
   ];
   options.myContainers = with lib; {
-    nixarr.enable = mkEnableOption "Enable Nixarr container";
+    media-server.enable = mkEnableOption "Enable Media Server container";
     nixos-remote.enable = mkEnableOption "Enable nixos-remote container";
     open-notebook.enable = mkEnableOption "Enable Open Notebook container";
   };

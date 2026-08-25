@@ -11,6 +11,7 @@
       8989 # Sonarr
       50000 # Transmission Peer Listening Port
       8096 # Jellyfin
+      8083 # Calibre
       3000
     ];
 
@@ -32,7 +33,7 @@
   #     cloudflare-tunnel-owp = genCloudService config.sops.secrets.cloudflared-owp.path "OWP";
   #   };
 
-  containers.nixarr = {
+  containers.media-server = {
     allowedDevices = [
       {
         node = "/dev/dri";
@@ -49,6 +50,7 @@
     ];
 
     autoStart = true;
+    privateUsers = "pick";
     bindMounts = {
       data = {
         mountPoint = "/data";
@@ -206,6 +208,14 @@
           MemoryHigh = "256M";
         };
 
+        # Calibre web for OPDS server to serve books.
+        services.calibre-web = {
+          enable = true;
+          dataDir = "/data/.state/calibre";
+          options.calibreLibrary = "/data/media/library/books/Books";
+          listen.ip = "0.0.0.0";
+        };
+
         hardware.graphics = {
           enable = true;
           extraPackages = with pkgs; [
@@ -217,4 +227,6 @@
         system.stateVersion = "25.05";
       };
   };
+
+  systemd.services."container@media-server".serviceConfig.MemoryHigh = "512M";
 }

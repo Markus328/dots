@@ -60,7 +60,7 @@
   # };
 
   myContainers = {
-    nixarr.enable = true;
+    media-server.enable = true;
     nixos-remote.enable = true;
     open-notebook.enable = true;
   };
