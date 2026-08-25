@@ -62,6 +62,11 @@ in
 
   security.pam.services.login.enableGnomeKeyring = true;
 
+  systemd.user.services = {
+    xdg-desktop-portal-gnome.serviceConfig.Slice = "session.slice";
+    niri-flake-polkit.serviceConfig.Slice = "session.slice";
+  };
+
   #USERS
   users.users = {
     markus = {

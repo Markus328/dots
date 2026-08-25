@@ -243,4 +243,6 @@
     btop.settings.color_theme = "noctalia";
   };
 
+  systemd.user.services.noctalia.Service.Slice = "session.slice";
+
 }

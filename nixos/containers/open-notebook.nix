@@ -140,6 +140,8 @@
       };
   };
 
+  systemd.services."container@open-notebook".serviceConfig.MemoryHigh = "512M";
+
   virtualisation.oci-containers.containers.litellm = {
     image = "docker.litellm.ai/berriai/litellm:main-stable";
     ports = [ "4000:4000" ];
@@ -155,7 +157,7 @@
 
     extraOptions = [
       "--network=host"
-      "-m=750M"
+      "-m=800M"
     ];
     environmentFiles = [ config.sops.secrets.litellm-secrets.path ];
   };

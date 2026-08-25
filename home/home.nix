@@ -18,6 +18,18 @@
 
   programs.caelestia-dots.hypr.enable = lib.mkForce false; # Do not using Hyprland
 
+  systemd.user.slices = {
+    session = {
+      Slice = {
+        CPUWeight = 150;
+        MemoryHigh = "512M";
+      };
+    };
+  };
+  systemd.user.services = {
+    gnome-keyring.Service.Slice = "session.slice";
+  };
+
   nixpkgs.config = {
     allowUnfree = true;
   };
@@ -142,7 +154,7 @@
   };
 
   home.activation.set-x11-kblayout = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${lib.getExe pkgs.setxkbmap} -layout us -variant workman -option ctrl:swapcaps
+    ${lib.getExe pkgs.setxkbmap} -layout us -variant workman -option ctrl:swapcaps || true
   '';
 
   specialisation = {
@@ -150,7 +162,7 @@
       xdg.dataFile."home-manager/specialisation".text = "gaming";
       home.activation.set-x11-kblayout = lib.mkForce (
         lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          ${lib.getExe pkgs.setxkbmap} -layout br -variant abnt2 -option ctrl:swapcaps
+          ${lib.getExe pkgs.setxkbmap} -layout br -variant abnt2 -option ctrl:swapcaps || true
         ''
       );
       services.easyeffects.enable = lib.mkForce false;

@@ -91,6 +91,7 @@
       # capture = "kms";
     };
   };
+  systemd.user.services.sunshine.serviceConfig.Slice = "session.slice";
 
   hardware.graphics = {
     enable = true;
