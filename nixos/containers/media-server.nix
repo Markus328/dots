@@ -114,52 +114,18 @@
             in
             {
               enable = true;
+              api.enable = true;
               package = jellyfin-mutable-webdir;
             };
           transmission.enable = true;
           sonarr.enable = true;
           prowlarr.enable = true;
-          recyclarr = {
-            enable = true;
-            configuration = {
-              sonarr.anime-sonar-v4 = {
-                base_url = "http://localhost:8989";
-                api_key = "!env_var SONARR_API_KEY";
-
-                include = [
-                  { template = "sonarr-quality-definition-anime"; }
-                  { template = "sonarr-v4-quality-profile-anime"; }
-                  { template = "sonarr-v4-custom-formats-anime"; }
-                ];
-                custom_formats = [
-                  {
-                    trash_ids = [ "026d5aadd1a6b4e550b134cb6c72b3ca" ]; # Uncensored
-                    assign_scores_to = [
-                      {
-                        name = "Remux-1080p - Anime";
-                        score = 1;
-                      }
-                    ];
-                  }
-                  {
-                    trash_ids = [ "418f50b10f1907201b6cfdf881f467b7" ]; # Dual Audio
-                    assign_scores_to = [
-                      {
-                        name = "Remux-1080p - Anime";
-                        score = 5;
-                      }
-                    ];
-                  }
-                ];
-              };
-            };
-          };
         };
 
         # Dirty service for unpackerr
         systemd.services.unpackerr =
           let
-            sonarr_api_key = "$(cat ${config.nixarr.stateDir}/api-keys/sonarr.key)";
+            sonarr_api_key = "$(cat ${config.nixarr.stateDir}/secrets/sonarr.api-key)";
           in
           {
             enable = true;
@@ -197,17 +163,6 @@
           RootDirectory = lib.mkForce null;
         };
 
-        # Resource Controls
-        systemd.services.prowlarr.serviceConfig = {
-          MemoryHigh = "200M";
-        };
-        systemd.services.sonarr.serviceConfig = {
-          MemoryHigh = "200M";
-        };
-        systemd.services.jellyfin.serviceConfig = {
-          MemoryHigh = "256M";
-        };
-
         # Calibre web for OPDS server to serve books.
         services.calibre-web = {
           enable = true;
@@ -222,6 +177,17 @@
             intel-media-driver
             vpl-gpu-rt # QSV
           ];
+        };
+
+        # Resource Controls
+        systemd.services.prowlarr.serviceConfig = {
+          MemoryHigh = "200M";
+        };
+        systemd.services.sonarr.serviceConfig = {
+          MemoryHigh = "200M";
+        };
+        systemd.services.jellyfin.serviceConfig = {
+          MemoryHigh = "256M";
         };
 
         system.stateVersion = "25.05";
