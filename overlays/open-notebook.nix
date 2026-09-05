@@ -100,7 +100,8 @@ let
               --set-default PROMPTS_PATH $out/prompts
 
             makeWrapper $out/surreal-commands-worker $out/bin/open-notebook-worker \
-              --set-default SURREAL_COMMANDS_MODULES commands
+              --set-default SURREAL_COMMANDS_MODULES commands \
+              --set-default PROMPTS_PATH $out/prompts
 
             patchShebangs $out/run_api.py
           '';
