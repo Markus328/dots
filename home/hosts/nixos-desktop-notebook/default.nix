@@ -179,11 +179,12 @@
 
     qbittorrent
     materialgram
-    zapzap
     libreoffice-qt6
     android-studio
     waydroid-helper
     vesktop
+    yt-dlp
+    gelly
   ];
 
   # Limit Zen's resources
