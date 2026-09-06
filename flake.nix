@@ -126,7 +126,10 @@
       homeConfigurations."markus@nixos-remote" = homeConfiguration "nixos-remote";
 
       devShells."${system}".default = pkgs.mkShell {
-        packages = with pkgs; [ nixfmt ];
+        packages = with pkgs; [
+          nixfmt
+          sops
+        ];
       };
     };
 }
