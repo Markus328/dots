@@ -143,8 +143,15 @@
     pavucontrol
     super-productivity
 
-    adwaita-icon-theme
   ];
+
+  gtk = {
+    enable = true;
+    iconTheme = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+  };
 
   programs.hm-ricing-mode = {
     enable = true;
