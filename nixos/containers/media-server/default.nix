@@ -82,6 +82,8 @@
             fi
           '';
 
+        };
+
         nixarr = {
           enable = true;
 
