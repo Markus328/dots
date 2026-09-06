@@ -64,6 +64,8 @@ in
           }"
         '';
 
+        elyprismlauncher = inputs.elyprismlauncher.packages.${system}.default;
+
         openwatchparty = callPackage ./openwatchparty.nix { };
         vuinputd = callPackage ./vuinputd { };
         open-notebook = callPackage ./open-notebook.nix { inherit inputs; };
