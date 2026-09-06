@@ -74,7 +74,7 @@
       url = "github:Markus328/hm-ricing-mode/fix-hm-module";
     };
 
-    nixarr.url = "github:rasmus-kirk/nixarr";
+    nixarr.url = "github:nix-media-server/nixarr";
 
     extra-container = {
       url = "github:erikarvstedt/extra-container";

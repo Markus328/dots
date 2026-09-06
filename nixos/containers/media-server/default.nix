@@ -12,26 +12,10 @@
       50000 # Transmission Peer Listening Port
       8096 # Jellyfin
       8083 # Calibre
-      3000
     ];
 
     allowedUDPPorts = allowedTCPPorts;
   };
-
-  # systemd.services =
-  #   let
-  #     genCloudService = tunnel-secret: name: {
-  #       description = "Cloudflare tunnel for ${name} instance";
-  #       wantedBy = [ "container@nixarr.service" ];
-  #       serviceConfig = {
-  #         ExecStart = "${lib.getExe pkgs.cloudflared} tunnel --config=${tunnel-secret} --no-autoupdate --origincert=${config.sops.secrets.cloudflared-cert.path} run";
-  #       };
-  #     };
-  #   in
-  #   {
-  #     cloudflare-tunnel-jellyfin = genCloudService config.sops.secrets.cloudflared-jelly.path "Jellyfin";
-  #     cloudflare-tunnel-owp = genCloudService config.sops.secrets.cloudflared-owp.path "OWP";
-  #   };
 
   containers.media-server = {
     allowedDevices = [
@@ -85,6 +69,7 @@
 
 
             if [ ! -d "$TARGET_DIR" ]; then
+              echo "Copying jellyfin-web to a writable location in /data/.state/jellyfin-web"
               mkdir -p "$TARGET_DIR"
               cp -r "$JELLYFIN_WEB_SRC"/* "$TARGET_DIR/"
               chown -R jellyfin: "$TARGET_DIR"
@@ -96,7 +81,6 @@
               tee /data/.state/owp-vars <<< "ALLOWED_ORIGINS=http://localhost:8096"
             fi
           '';
-        };
 
         nixarr = {
           enable = true;
@@ -119,8 +103,11 @@
             };
           transmission.enable = true;
           sonarr.enable = true;
+          lidarr.enable = true;
           prowlarr.enable = true;
         };
+
+        services.flaresolverr.enable = true;
 
         # Dirty service for unpackerr
         systemd.services.unpackerr =

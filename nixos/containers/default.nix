@@ -22,7 +22,7 @@ in
 {
   imports = [
     inputs.extra-container.nixosModules.default
-    (condImport ./media-server.nix "media-server")
+    (condImport ./media-server "media-server")
     (condImport ./nixos-remote.nix "nixos-remote")
     (condImport ./open-notebook.nix "open-notebook")
   ];
