@@ -106,10 +106,20 @@
           transmission.enable = true;
           sonarr.enable = true;
           lidarr.enable = true;
-          prowlarr.enable = true;
+          prowlarr = {
+            enable = true;
+            settings-sync.enable-nixarr-apps = true;
+          };
+          bazarr = {
+            enable = true;
+            settings-sync.sonarr.enable = true;
+          };
         };
 
         services.flaresolverr.enable = true;
+        services.prowlarr.settings.auth.required = "DisabledForLocalAddresses";
+        services.sonarr.settings.auth.required = "DisabledForLocalAddresses";
+        services.lidarr.settings.auth.required = "DisabledForLocalAddresses";
 
         # Dirty service for unpackerr
         systemd.services.unpackerr =
