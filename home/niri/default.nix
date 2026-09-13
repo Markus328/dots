@@ -41,6 +41,7 @@
             }
             repeat-delay 250
             repeat-rate 35
+            track-layout "window"
         }
         touchpad {
             tap
