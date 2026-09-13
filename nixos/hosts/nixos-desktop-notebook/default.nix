@@ -55,15 +55,13 @@
     };
   };
 
-  # services.sunshine.settings = {
-  #   output_name = 1;
-  # };
-
   myContainers = {
     media-server.enable = true;
     nixos-remote.enable = true;
     open-notebook.enable = true;
   };
+
+  services.flatpak = lib.mkForce false;
 
   # Device-specific networking
   networking.hostName = "nixos-desktop-notebook";

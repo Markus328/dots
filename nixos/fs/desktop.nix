@@ -1,7 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-{ config, ... }:
+{ config, lib, ... }:
 {
   swapDevices = [
     {
@@ -40,7 +40,7 @@
         options = compress.options ++ [ "subvol=/@nix" ];
         inherit fsType;
       };
-      "/var/lib/flatpak" = {
+      "/var/lib/flatpak" = lib.mkIf config.services.flatpak.enable {
         inherit label;
         options = compress.options ++ [ "subvol=/@flatpak" ];
         inherit fsType;
