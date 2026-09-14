@@ -61,7 +61,7 @@
     open-notebook.enable = true;
   };
 
-  services.flatpak = lib.mkForce false;
+  services.flatpak.enable = lib.mkForce false;
 
   # Device-specific networking
   networking.hostName = "nixos-desktop-notebook";
