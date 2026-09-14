@@ -187,6 +187,11 @@
     gelly
   ];
 
+  services.jellyfin-mpv-shim = {
+    enable = true;
+    mpvBindings = config.programs.mpv.bindings;
+  };
+
   # Limit Zen's resources
   xdg.configFile."systemd/user/app-zen\\x2dbeta@.service.d/50-limits.conf".text = ''
     [Service]

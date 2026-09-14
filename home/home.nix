@@ -101,6 +101,25 @@
 
   programs.mpv = {
     enable = true;
+    bindings = {
+      "Ctrl+Shift+LEFT" = "sub-step -1";
+      "Ctrl+Shift+RIGHT" = "sub-step 1";
+      "-" = "multiply speed 1/1.1";
+      "=" = "multiply speed 1.1";
+      "_" = "multiply speed 0.5";
+      "+" = "multiply speed 2.0";
+      "p" = "show-progress";
+      "P" = "script-binding webtorrent/toggle-info";
+      "u" = "script-binding stats/display-stats";
+      "U" = "script-binding stats/display-stats-toggle";
+      ")" = "add audio-delay 0.100";
+      "(" = "add audio-delay -0.100";
+      "/" = "add volume -2";
+      "'" = "add volume 2";
+      "l" = "cycle mute";
+      "t" = "cycle fullscreen";
+      "o" = "ab-loop";
+    };
     scripts = with pkgs.mpvScripts; [ mpris ];
   };
 
