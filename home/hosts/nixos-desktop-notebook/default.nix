@@ -222,6 +222,7 @@
   specialisation = {
     gaming.configuration = {
       services.syncthing.enable = lib.mkForce false;
+      services.jellyfin-mpv-shim.enable = lib.mkForce false;
       services.kdeconnect = {
         enable = lib.mkForce false;
         indicator = lib.mkForce false;
