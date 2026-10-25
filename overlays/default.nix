@@ -37,10 +37,10 @@ in
           hypr-dynamic-cursors = inputs.hypr-dynamic-cursors.packages.${system}.default;
         };
 
-        # Caelestia
         caelestia-cli = inputs.caelestia-shell.inputs.caelestia-cli.packages.${system}.default;
         caelestia-shell = inputs.caelestia-shell.packages.${system}.default;
         noctalia-shell = inputs.noctalia-shell.packages.${system}.default;
+        zapfast = inputs.zapfast.packages.${system}.default;
 
         # Neovim (AstroVIM support)
         astrovim = runCommand "astrovim" { nativeBuildInputs = [ makeWrapper ]; } ''

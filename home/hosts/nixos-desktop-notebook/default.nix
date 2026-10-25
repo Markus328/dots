@@ -185,6 +185,7 @@
     vesktop
     yt-dlp
     gelly
+    zapfast
   ];
 
   services.jellyfin-mpv-shim = {
