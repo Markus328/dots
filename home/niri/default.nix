@@ -285,7 +285,7 @@
         Mod+Ctrl+K { set-dynamic-cast-monitor;}
         Mod+Ctrl+V { clear-dynamic-cast-target;}
 
-        Ctrl+Alt+A hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
+        Ctrl+Alt+A hotkey-overlay-title="Open a Terminal: foot" { spawn "footclient"; }
 
         Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
 
