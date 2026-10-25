@@ -25,6 +25,21 @@
     };
   };
 
+  services.udiskie = {
+    enable = true;
+    settings = {
+      program_options = {
+        file_manager = "${pkgs.kdePackages.dolphin}/bin/dolphin";
+      };
+      device_config = [
+        {
+          id_uuid = "606b3d07-4bd2-4c7b-9987-4c5f7e2c8030";
+          automount = false;
+        }
+      ];
+    };
+  };
+
   # Fix dolphin "Open with"
   xdg.configFile."menus/applications.menu".source =
     let
