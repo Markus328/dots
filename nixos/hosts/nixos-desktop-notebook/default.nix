@@ -55,6 +55,18 @@
     };
   };
 
+  networking.networkmanager.dispatcherScripts = [
+    {
+      type = "basic";
+      source = pkgs.writeShellScript "cloudflare-dns" ''
+        if [ "$1" = "wlp0s20f3" ] && [ "$2" = "up" ]; then
+          ${pkgs.systemd}/bin/resolvectl dns wlp0s20f3 1.1.1.1#one.one.one.one 1.0.0.1#one.one.one.one
+          ${pkgs.systemd}/bin/resolvectl dnsovertls wlp0s20f3 yes
+        fi
+      '';
+    }
+  ];
+
   myContainers = {
     media-server.enable = true;
     nixos-remote.enable = true;
